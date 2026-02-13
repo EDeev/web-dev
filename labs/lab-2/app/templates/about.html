@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mt-5 text-center">Об авторе</h1>
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <img class="avatar" src="{{ url_for('static', filename='images/avatar.jpg') }}" alt="Author">
+    </div>
+    <div class="col-md-8 text-justify d-flex align-items-center">
+        <p>
+            Деев Егор Викторович — backend-разработчик и Python-специалист из Москвы, специализирующийся на создании backend-решений, парсинге данных, автоматизации процессов и интеграции AI-компонентов. 
+            <br><br>
+            Обучается в Московском Политехническом университете (МосПолитех), владеет широким технологическим стеком, включающим Python (Django, FastAPI, Flask), работу с базами данных (PostgreSQL, SQLite), DevOps-инструменты (Docker, Nginx), а также frontend-технологии (HTML5, CSS3, JavaScript). 
+            <br><br>
+            Контакты для связи: email egor@deev.space, Telegram @Egor_Deev, GitHub @EDeev, личный сайт deev.space с блогом и портфолио проектов.
+        </p>
+    </div>
+</div>
+{% endblock %}
