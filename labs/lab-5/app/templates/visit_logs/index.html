@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row my-4">
+    <div class="col-12">
+        <div class="users-header">
+            <div>
+                <h1 class="mb-1">Журнал посещений</h1>
+                <p style="color: var(--text-muted); margin-bottom: 0;">Лабораторная работа №5</p>
+            </div>
+        </div>
+
+        {% if is_admin %}
+        <div class="d-flex" style="gap: 0.75rem; margin-bottom: 1.5rem;">
+            <a href="{{ url_for('visit_logs.pages_report') }}" class="btn btn-outline">
+                <i class="fas fa-file-alt"></i> Отчёт по страницам
+            </a>
+            <a href="{{ url_for('visit_logs.users_report') }}" class="btn btn-outline">
+                <i class="fas fa-users"></i> Отчёт по пользователям
+            </a>
+        </div>
+        {% endif %}
+
+        <div class="data-card">
+            {% if logs %}
+            <div class="table-responsive">
+                <table class="data-table w-100">
+                    <thead>
+                        <tr>
+                            <th style="width: 56px;">№</th>
+                            <th>Пользователь</th>
+                            <th>Страница</th>
+                            <th style="width: 200px;">Дата</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set offset = (pagination.page - 1) * pagination.per_page %}
+                        {% for log in logs %}
+                        <tr>
+                            <td>{{ offset + loop.index }}</td>
+                            <td>
+                                {% if log.user %}
+                                <div class="d-flex align-items-center" style="gap: 0.6rem;">
+                                    <div class="user-avatar-sm" style="width: 28px; height: 28px; font-size: 0.75rem;">
+                                        {{ (log.user.first_name[0] if log.user.first_name else '?') | upper }}
+                                    </div>
+                                    <span style="color: var(--text-primary);">{{ log.user.get_full_name() or log.user.login }}</span>
+                                </div>
+                                {% else %}
+                                <span style="color: var(--text-muted); font-style: italic;">Неаутентифицированный пользователь</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <code style="color: var(--primary-light); font-size: 0.85rem;">{{ log.path }}</code>
+                            </td>
+                            <td style="color: var(--text-muted); font-size: 0.85rem;">
+                                {{ log.created_at.strftime('%d.%m.%Y %H:%M:%S') if log.created_at else '—' }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if pagination.pages > 1 %}
+            <div class="pagination-container">
+                {% if pagination.has_prev %}
+                <a href="{{ url_for('visit_logs.index', page=pagination.prev_num) }}" class="pagination-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                {% endif %}
+
+                {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                    {% if p %}
+                    <a href="{{ url_for('visit_logs.index', page=p) }}"
+                       class="pagination-btn {% if p == pagination.page %}active{% endif %}">
+                        {{ p }}
+                    </a>
+                    {% else %}
+                    <span class="pagination-btn" style="cursor: default; color: var(--text-muted);">…</span>
+                    {% endif %}
+                {% endfor %}
+
+                {% if pagination.has_next %}
+                <a href="{{ url_for('visit_logs.index', page=pagination.next_num) }}" class="pagination-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-list-alt"></i>
+                </div>
+                <p>Записей пока нет</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

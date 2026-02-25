@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import user_form %}
+
+{% block content %}
+<div class="row my-4">
+    <div class="col-lg-8 col-xl-9 mx-auto">
+        <div class="page-back-header">
+            <a href="{{ url_for('users_list') }}" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1>Создать пользователя</h1>
+        </div>
+
+        <div class="data-card">
+            <form method="POST" action="{{ url_for('user_create') }}">
+                {{ user_form(roles, errors, form_data, include_credentials=True) }}
+
+                <div class="d-flex" style="gap: 0.75rem;">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Сохранить
+                    </button>
+                    <a href="{{ url_for('users_list') }}" class="btn btn-outline">
+                        <i class="fas fa-times"></i> Отмена
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

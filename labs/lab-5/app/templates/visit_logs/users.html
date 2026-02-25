@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row my-4">
+    <div class="col-12">
+        <div class="users-header">
+            <div>
+                <h1 class="mb-1">Отчёт по пользователям</h1>
+                <p style="color: var(--text-muted); margin-bottom: 0;">Статистика посещений по пользователям</p>
+            </div>
+            <a href="{{ url_for('visit_logs.index') }}" class="btn btn-outline">
+                <i class="fas fa-arrow-left"></i> К журналу
+            </a>
+        </div>
+
+        <div class="data-card">
+            {% if stats %}
+            <div class="table-responsive">
+                <table class="data-table w-100">
+                    <thead>
+                        <tr>
+                            <th style="width: 56px;">№</th>
+                            <th>Пользователь</th>
+                            <th style="width: 300px;">Количество посещений</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in stats %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>
+                                {% set parts = [row.last_name, row.first_name, row.middle_name] %}
+                                {% set full_name = parts | select | join(' ') %}
+                                {% if full_name %}
+                                <div class="d-flex align-items-center" style="gap: 0.6rem;">
+                                    <div class="user-avatar-sm" style="width: 28px; height: 28px; font-size: 0.75rem;">
+                                        {{ (row.first_name[0] if row.first_name else '?') | upper }}
+                                    </div>
+                                    <span style="color: var(--text-primary);">{{ full_name }}</span>
+                                </div>
+                                {% else %}
+                                <span style="color: var(--text-muted); font-style: italic;">Неаутентифицированный пользователь</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="role-badge">{{ row.count }}</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <p>Данных пока нет</p>
+            </div>
+            {% endif %}
+
+            <div style="margin-top: 1.5rem;">
+                <a href="{{ url_for('visit_logs.users_export') }}" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Экспорт в CSV
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
