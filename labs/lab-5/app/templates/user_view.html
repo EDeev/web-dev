@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row my-4">
+    <div class="col-lg-8 col-xl-9 mx-auto">
+        <div class="page-back-header">
+            <a href="{{ url_for('users_list') }}" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1>Профиль пользователя</h1>
+        </div>
+
+        <div class="data-card">
+            <div class="user-profile-header">
+                <div class="user-avatar-lg">
+                    {{ (user.first_name[0] if user.first_name else '?') | upper }}
+                </div>
+                <div>
+                    <h2 style="margin-bottom: 0.35rem;">{{ user.get_full_name() or user.login }}</h2>
+                    <span class="user-login-badge">@{{ user.login }}</span>
+                </div>
+            </div>
+
+            <table class="data-table w-100" style="margin-top: 1.5rem;">
+                <tbody>
+                    <tr>
+                        <td class="field-label">Идентификатор</td>
+                        <td>{{ user.id }}</td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">Логин</td>
+                        <td style="font-family: 'Fira Code', monospace; color: var(--primary-light);">{{ user.login }}</td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">Фамилия</td>
+                        <td>{{ user.last_name or '—' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">Имя</td>
+                        <td>{{ user.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">Отчество</td>
+                        <td>{{ user.middle_name or '—' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">Роль</td>
+                        <td>
+                            {% if user.role %}
+                            <span class="role-badge">{{ user.role.name }}</span>
+                            {% if user.role.description %}
+                            <span style="color: var(--text-muted); font-size: 0.85rem; margin-left: 0.5rem;">
+                                — {{ user.role.description }}
+                            </span>
+                            {% endif %}
+                            {% else %}
+                            <span style="color: var(--text-muted);">—</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field-label">Дата создания</td>
+                        <td>{{ user.created_at.strftime('%d.%m.%Y %H:%M') if user.created_at else '—' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            {% set is_admin = current_user.is_authenticated and current_user.role and current_user.role.name == 'Администратор' %}
+            {% set is_user_role = current_user.is_authenticated and current_user.role and current_user.role.name == 'Пользователь' %}
+            <div class="d-flex" style="gap: 0.75rem; margin-top: 1.5rem;">
+                {% if is_admin or (is_user_role and user.id == current_user.id) %}
+                <a href="{{ url_for('user_edit', user_id=user.id) }}" class="btn btn-primary">
+                    <i class="fas fa-pen"></i> Редактировать
+                </a>
+                {% endif %}
+                <a href="{{ url_for('users_list') }}" class="btn btn-outline">
+                    <i class="fas fa-list"></i> К списку
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import user_form %}
+
+{% block content %}
+<div class="row my-4">
+    <div class="col-lg-8 col-xl-9 mx-auto">
+        <div class="page-back-header">
+            <a href="{{ url_for('users_list') }}" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1>Редактировать пользователя</h1>
+        </div>
+
+        <div class="data-card">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border);">
+                <div class="user-avatar-sm" style="width: 40px; height: 40px; font-size: 1rem;">
+                    {{ (user.first_name[0] if user.first_name else '?') | upper }}
+                </div>
+                <div>
+                    <div style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;">Логин</div>
+                    <div style="color: var(--primary-light); font-family: 'Fira Code', monospace; font-weight: 600;">{{ user.login }}</div>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ url_for('user_edit', user_id=user.id) }}">
+                {{ user_form(roles, errors, form_data, include_credentials=False, disable_role=disable_role) }}
+
+                <div class="d-flex" style="gap: 0.75rem;">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Сохранить
+                    </button>
+                    <a href="{{ url_for('users_list') }}" class="btn btn-outline">
+                        <i class="fas fa-times"></i> Отмена
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

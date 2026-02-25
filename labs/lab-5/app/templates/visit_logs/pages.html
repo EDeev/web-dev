@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row my-4">
+    <div class="col-12">
+        <div class="users-header">
+            <div>
+                <h1 class="mb-1">Отчёт по страницам</h1>
+                <p style="color: var(--text-muted); margin-bottom: 0;">Статистика посещений страниц сайта</p>
+            </div>
+            <a href="{{ url_for('visit_logs.index') }}" class="btn btn-outline">
+                <i class="fas fa-arrow-left"></i> К журналу
+            </a>
+        </div>
+
+        <div class="data-card">
+            {% if stats %}
+            <div class="table-responsive">
+                <table class="data-table w-100">
+                    <thead>
+                        <tr>
+                            <th style="width: 56px;">№</th>
+                            <th>Страница</th>
+                            <th style="width: 300px;">Количество посещений</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in stats %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>
+                                <code style="color: var(--primary-light); font-size: 0.85rem;">{{ row.path }}</code>
+                            </td>
+                            <td>
+                                <span class="role-badge">{{ row.count }}</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <p>Данных пока нет</p>
+            </div>
+            {% endif %}
+
+            <div style="margin-top: 1.5rem;">
+                <a href="{{ url_for('visit_logs.pages_export') }}" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Экспорт в CSV
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center my-5">
+    <div class="col-lg-6 col-md-8">
+        <div class="visits-card">
+            <div class="visits-icon">
+                <i class="fas fa-eye"></i>
+            </div>
+            <h1>Счётчик посещений</h1>
+            <p class="visits-description">Эта страница отслеживает количество ваших посещений с помощью сессии Flask.</p>
+            <div class="visits-counter">
+                <span class="visits-number">{{ visits }}</span>
+                <span class="visits-label">{{ visits }} {{ 'посещение' if visits == 1 else ('посещения' if visits < 5 else 'посещений') }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
