@@ -1,0 +1,448 @@
+/* === Переменные темы === */
+:root {
+    --red:         #e63946;
+    --red-light:   #ff6b6b;
+    --red-dark:    #c1121f;
+    --red-bg:      rgba(230, 57, 70, 0.15);
+    --red-glow:    rgba(230, 57, 70, 0.3);
+
+    --bg:          #0d0d0d;
+    --bg-darker:   #080808;
+    --card:        #141414;
+    --card-hover:  #1a1a1a;
+    --elevated:    #1e1e1e;
+    --input-bg:    #1a1a1a;
+
+    --text:        #ffffff;
+    --text-sec:    #b0b0b0;
+    --text-muted:  #666666;
+
+    --border:      #2a2a2a;
+    --border-lt:   #3a3a3a;
+
+    --success:     #22c55e;
+    --warning:     #f59e0b;
+    --danger:      #ef4444;
+    --info:        #3b82f6;
+
+    --radius-sm:   8px;
+    --radius-md:   12px;
+    --radius-lg:   16px;
+    --radius-xl:   24px;
+    --radius-full: 9999px;
+
+    --transition:  all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === Базовые стили === */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+a { color: var(--red); text-decoration: none; transition: var(--transition); }
+a:hover { color: var(--red-light); }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-lt); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--red); }
+
+::selection { background: var(--red); color: #fff; }
+
+/* === Навбар === */
+.site-navbar {
+    background: rgba(13, 13, 13, 0.92) !important;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 300;
+}
+
+.logo { max-width: 160px; }
+.logo img { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); transition: var(--transition); }
+.logo img:hover { filter: drop-shadow(0 2px 12px var(--red-glow)); transform: translateY(-1px); }
+
+.nav-link-item {
+    color: var(--text-sec);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+.nav-link-item:hover {
+    color: var(--text);
+    background: var(--red-bg);
+}
+
+.profile-avatar { max-width: 40px; cursor: pointer; }
+.profile-avatar img { border: 2px solid var(--border-lt); transition: var(--transition); }
+.profile-avatar img:hover { border-color: var(--red); }
+
+/* === Dropdown === */
+.site-dropdown {
+    background: var(--card) !important;
+    border: 1px solid var(--border-lt) !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.site-dropdown .dropdown-item {
+    color: var(--text-sec);
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+.site-dropdown .dropdown-item:hover { background: var(--red-bg); color: var(--text); }
+.site-dropdown .dropdown-divider { border-color: var(--border); }
+.site-dropdown .dropdown-item-text { color: var(--text-muted); }
+
+/* === Кнопки === */
+.btn-primary-red {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    box-shadow: 0 4px 15px var(--red-glow);
+}
+.btn-primary-red:hover {
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--red-glow);
+}
+
+/* Bootstrap переопределения */
+.btn-dark, .btn-dark:focus {
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%) !important;
+    border: none !important;
+    color: #fff !important;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px var(--red-glow);
+}
+.btn-dark:hover {
+    background: linear-gradient(135deg, var(--red-light) 0%, var(--red) 100%) !important;
+    color: #fff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--red-glow);
+}
+
+.btn-outline-light {
+    border-color: var(--border-lt) !important;
+    color: var(--text-sec) !important;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+}
+.btn-outline-light:hover {
+    border-color: var(--red) !important;
+    background: var(--red-bg) !important;
+    color: var(--text) !important;
+}
+
+/* === Alerts === */
+.site-alert {
+    border: none;
+    border-left: 4px solid;
+}
+.alert-success { background: rgba(34, 197, 94, 0.15) !important; border-left-color: var(--success); color: var(--text) !important; }
+.alert-danger  { background: rgba(239, 68, 68, 0.15) !important; border-left-color: var(--danger); color: var(--text) !important; }
+.alert-warning { background: rgba(245, 158, 11, 0.15) !important; border-left-color: var(--warning); color: var(--text) !important; }
+.alert-info    { background: rgba(59, 130, 246, 0.15) !important; border-left-color: var(--info); color: var(--text) !important; }
+.btn-close-white { filter: invert(1); }
+
+/* === Bootstrap card override === */
+.card {
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius-md) !important;
+    color: var(--text) !important;
+}
+.card-header {
+    background: var(--elevated) !important;
+    border-bottom: 1px solid var(--border) !important;
+    color: var(--text) !important;
+}
+.card-body { color: var(--text-sec) !important; }
+.card-text { color: var(--text-sec); }
+
+/* === Формы === */
+.form-control, .form-select {
+    background: var(--input-bg) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius-md) !important;
+    color: var(--text) !important;
+    font-size: 0.9rem;
+    padding: 0.7rem 1rem;
+    transition: var(--transition);
+}
+.form-control:focus, .form-select:focus {
+    background: var(--input-bg) !important;
+    border-color: var(--red) !important;
+    box-shadow: 0 0 0 3px var(--red-bg) !important;
+    color: var(--text) !important;
+    outline: none;
+}
+.form-control::placeholder { color: var(--text-muted); }
+.form-select option { background: var(--card); color: var(--text); }
+label { color: var(--text-sec); font-size: 0.9rem; margin-bottom: 0.4rem; display: block; }
+
+/* === Главная страница === */
+.hero-section {
+    min-height: calc(100vh - 70px);
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1rem;
+    position: relative;
+}
+.hero-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(230,57,70,0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+.hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    background: linear-gradient(135deg, #fff 0%, var(--text-sec) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+}
+.hero-desc {
+    color: var(--text-sec);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    font-size: 1.05rem;
+}
+.hero-search {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* === Заголовок курса (hero) === */
+.title-area {
+    background-color: var(--bg-darker);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: var(--text);
+    font-size: 1.1rem;
+    min-height: calc(65vh);
+}
+.title-area h1 { font-size: clamp(1.8rem, 4vw, 3rem); }
+.title-area p { color: rgba(255,255,255,0.85); }
+
+/* === Список курсов === */
+.courses-list .row {
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius-lg);
+    transition: var(--transition);
+    cursor: pointer;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+.courses-list .row:hover {
+    border-color: var(--red) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.courses-list h4 { color: var(--text); }
+.courses-list .text-muted { color: var(--text-muted) !important; }
+
+.course-logo {
+    min-width: 160px;
+    width: 100%;
+    height: 160px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: var(--radius-md);
+}
+
+.rating { color: var(--red); font-weight: 600; white-space: nowrap; }
+
+/* === Фоновый preview === */
+.background-preview {
+    border: 2px dashed var(--border-lt);
+    border-radius: var(--radius-md);
+    flex-grow: 1;
+    background: var(--input-bg);
+    min-height: 200px;
+}
+
+/* === Пагинация === */
+.pagination { gap: 0.4rem; }
+.page-link {
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-sec) !important;
+    border-radius: var(--radius-md) !important;
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+.page-link:hover {
+    border-color: var(--red) !important;
+    color: var(--red) !important;
+    background: var(--card) !important;
+}
+.page-item.active .page-link {
+    background: var(--red-bg) !important;
+    border-color: var(--red) !important;
+    color: var(--red) !important;
+    font-weight: 600;
+}
+.page-item.disabled .page-link { opacity: 0.4; }
+
+/* === Отзывы === */
+.review-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    transition: var(--transition);
+    margin-bottom: 1rem;
+}
+.review-card:hover { border-color: var(--border-lt); }
+
+.review-stars { color: var(--red); letter-spacing: 2px; font-size: 1rem; }
+.review-author { color: var(--text); font-weight: 600; font-size: 0.95rem; }
+.review-date { color: var(--text-muted); font-size: 0.8rem; }
+.review-text { color: var(--text-sec); margin-top: 0.5rem; line-height: 1.6; }
+
+.review-form-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+}
+.review-form-card h5 { color: var(--text); font-family: 'Raleway', sans-serif; margin-bottom: 1rem; }
+
+.section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+/* === Секции курса === */
+.course-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+.course-section h2 {
+    font-size: 1.4rem;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* === Бейдж рейтинга === */
+.rating-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--red-bg);
+    color: var(--red);
+    border-radius: var(--radius-full);
+    padding: 0.25rem 0.75rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+/* === Footer === */
+.site-footer {
+    background: var(--bg-darker);
+    border-top: 1px solid var(--border);
+    padding: 1.75rem 0 1.25rem;
+    margin-top: auto;
+}
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.footer-logo { opacity: 0.75; }
+.footer-info .footer-name {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.footer-info .footer-group {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+.footer-links { display: flex; gap: 1rem; align-items: center; }
+.footer-links a {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    transition: var(--transition);
+    text-decoration: none;
+}
+.footer-links a:hover {
+    color: var(--red);
+    transform: translateY(-2px);
+    text-shadow: 0 0 10px var(--red-glow);
+}
+.footer-copy { color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+
+/* === Адаптивность === */
+@media (max-width: 768px) {
+    .footer-content { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+    .footer-logo { display: none; }
+    .hero-section { padding: 2rem 1rem; }
+    .course-logo { height: 120px; }
+    .courses-list .row { flex-direction: column; }
+}

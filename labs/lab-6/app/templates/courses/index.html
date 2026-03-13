@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% from 'pagination.html' import render_pagination %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+
+    <h2 class="mb-4 text-center text-uppercase">Каталог курсов</h2>
+
+    <div class="review-form-card mb-4">
+        <form class="row align-items-end g-3">
+            <div class="col-md-6">
+                <label for="course-name">Название курса</label>
+                <input autocomplete="off" type="text" class="form-control" id="course-name" name="name"
+                    value="{{ request.args.get('name') or '' }}" placeholder="Введите название...">
+            </div>
+
+            <div class="col-md-4">
+                <label for="course-category">Категория</label>
+                <select class="form-select" id="course-category" name="category_ids">
+                    <option value="">Все категории</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if category.id | string in request.args.getlist('category_ids') %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit" class="btn-primary-red w-100" style="height:44px; justify-content:center; display:flex; align-items:center;">
+                    <i class="fas fa-search me-1"></i>Найти
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="courses-list mt-3 mb-3">
+        {% for course in courses %}
+            <div class="row p-3 border rounded mb-3" data-url="{{ url_for('courses.show', course_id=course.id) }}">
+                <div class="col-md-3 mb-3 mb-md-0 d-flex align-items-center justify-content-center">
+                    <div class="course-logo" style="background-image: url({{ url_for('image', image_id=course.background_image_id) }});">
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="d-flex align-items-start">
+                        <h4 class="text-uppercase mb-2">{{ course.name }}</h4>
+                        <span class="rating ms-auto">
+                            <i class="fas fa-star me-1"></i>{{ "%.2f" | format(course.rating) }}
+                        </span>
+                    </div>
+                    <p class="text-muted my-2 mb-3">{{ course.author.full_name }}</p>
+                    <p style="color: var(--text-sec);">{{ course.short_desc | truncate(200) }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-5">
+        {{ render_pagination(pagination, request.endpoint, search_params) }}
+    </div>
+
+    {% if current_user.is_authenticated %}
+        <div class="text-center my-4">
+            <a class="btn-primary-red" href="{{ url_for('courses.new') }}" style="font-size:1rem; padding: 0.8rem 2rem;">
+                <i class="fas fa-plus me-2"></i>Создать курс
+            </a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
