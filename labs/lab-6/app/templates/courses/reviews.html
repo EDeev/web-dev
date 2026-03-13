@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% from 'pagination.html' import render_pagination %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="d-flex align-items-center mb-4 gap-3 flex-wrap">
+        <h1 style="font-size: 1.8rem; margin-bottom:0;">
+            Отзывы: <span style="color: var(--red);">{{ course.name }}</span>
+        </h1>
+        <a href="{{ url_for('courses.show', course_id=course.id) }}" class="btn-primary-red ms-auto">
+            <i class="fas fa-arrow-left me-1"></i>К курсу
+        </a>
+    </div>
+
+    {# Фильтр сортировки #}
+    <div class="review-form-card mb-4">
+        <form method="GET" action="{{ url_for('courses.reviews', course_id=course.id) }}" class="d-flex align-items-end gap-3 flex-wrap">
+            <div>
+                <label for="sort">Порядок сортировки</label>
+                <select class="form-select" name="sort" id="sort" style="min-width:220px;">
+                    <option value="new" {% if sort == 'new' %}selected{% endif %}>Сначала новые</option>
+                    <option value="positive" {% if sort == 'positive' %}selected{% endif %}>Сначала положительные</option>
+                    <option value="negative" {% if sort == 'negative' %}selected{% endif %}>Сначала отрицательные</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-primary-red">
+                <i class="fas fa-filter me-1"></i>Применить
+            </button>
+        </form>
+    </div>
+
+    {# Список отзывов #}
+    {% if reviews %}
+        {% for review in reviews %}
+            <div class="review-card">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div>
+                        <span class="review-author">{{ review.user.full_name }}</span>
+                        <span class="review-date ms-2">{{ review.created_at.strftime('%d.%m.%Y %H:%M') }}</span>
+                    </div>
+                    <div class="review-stars">
+                        {% for i in range(5) %}
+                            {% if i < review.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}
+                        {% endfor %}
+                        <span class="ms-1" style="color: var(--text-muted); font-size:0.82rem;">({{ review.rating }}/5)</span>
+                    </div>
+                </div>
+                <p class="review-text mb-0">{{ review.text }}</p>
+            </div>
+        {% endfor %}
+
+        {# Пагинация с сохранением сортировки #}
+        <div class="mt-4">
+            {{ render_pagination(pagination, 'courses.reviews', {'course_id': course.id, 'sort': sort}) }}
+        </div>
+    {% else %}
+        <div class="review-form-card text-center py-5">
+            <i class="fas fa-comment-slash fa-3x mb-3" style="color: var(--text-muted);"></i>
+            <p style="color: var(--text-muted);">Отзывов пока нет. Будьте первым!</p>
+        </div>
+    {% endif %}
+
+    {# Форма отзыва внизу страницы #}
+    {% if current_user.is_authenticated %}
+        <div class="mt-5">
+            {% if user_review %}
+                <div class="review-form-card">
+                    <h5><i class="fas fa-user me-2" style="color: var(--red);"></i>Ваш отзыв</h5>
+                    <div class="review-card" style="background: var(--elevated);">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div>
+                                <span class="review-author">{{ current_user.full_name }}</span>
+                                <span class="review-date ms-2">{{ user_review.created_at.strftime('%d.%m.%Y') }}</span>
+                            </div>
+                            <div class="review-stars">
+                                {% for i in range(5) %}
+                                    {% if i < user_review.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}
+                                {% endfor %}
+                                <span class="ms-1" style="color: var(--text-muted); font-size:0.82rem;">({{ user_review.rating }}/5)</span>
+                            </div>
+                        </div>
+                        <p class="review-text mb-0">{{ user_review.text }}</p>
+                    </div>
+                </div>
+            {% else %}
+                {# Форма добавления отзыва #}
+                <div class="review-form-card">
+                    <h5><i class="fas fa-edit me-2" style="color: var(--red);"></i>Оставить отзыв</h5>
+                    <form method="POST" action="{{ url_for('courses.create_review', course_id=course.id) }}">
+                        <input type="hidden" name="next" value="{{ url_for('courses.reviews', course_id=course.id, sort=sort) }}">
+                        <div class="mb-3">
+                            <label for="rating">Оценка</label>
+                            <select class="form-select" name="rating" id="rating">
+                                <option value="5">5 — Отлично</option>
+                                <option value="4">4 — Хорошо</option>
+                                <option value="3">3 — Удовлетворительно</option>
+                                <option value="2">2 — Неудовлетворительно</option>
+                                <option value="1">1 — Плохо</option>
+                                <option value="0">0 — Ужасно</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="text">Текст отзыва</label>
+                            <textarea class="form-control" name="text" id="text" rows="4" placeholder="Поделитесь впечатлением о курсе..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary-red">
+                            <i class="fas fa-paper-plane me-1"></i>Отправить отзыв
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
