@@ -1,0 +1,78 @@
+{% macro rating_badge(value) %}
+{% if value is not none %}
+    {% set v = value | int %}
+    {% if v == 5 %}{% set color = 'success' %}
+    {% elif v == 4 %}{% set color = 'info' %}
+    {% elif v == 3 %}{% set color = 'warning' %}
+    {% elif v == 2 %}{% set color = 'orange' %}
+    {% else %}{% set color = 'danger' %}
+    {% endif %}
+    <span class="badge bg-{{ color }} text-white">{{ value }}</span>
+{% endif %}
+{% endmacro %}
+
+{% macro book_form_fields(book, genres, selected_genres, is_edit, current_cover=none) %}
+<div class="mb-3">
+    <label class="form-label">Название <span class="text-danger">*</span></label>
+    <input type="text" class="form-control" name="title"
+           value="{{ book.title if book else '' }}" required>
+</div>
+<div class="mb-3">
+    <label class="form-label">Автор <span class="text-danger">*</span></label>
+    <input type="text" class="form-control" name="author"
+           value="{{ book.author if book else '' }}" required>
+</div>
+<div class="mb-3">
+    <label class="form-label">Издательство <span class="text-danger">*</span></label>
+    <input type="text" class="form-control" name="publisher"
+           value="{{ book.publisher if book else '' }}" required>
+</div>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Год <span class="text-danger">*</span></label>
+        <input type="number" class="form-control" name="year" min="1000" max="2100"
+               value="{{ book.year if book else '' }}" required>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Объём (страниц) <span class="text-danger">*</span></label>
+        <input type="number" class="form-control" name="pages" min="1"
+               value="{{ book.pages if book else '' }}" required>
+    </div>
+</div>
+<div class="mb-3">
+    <label class="form-label">Жанры <span class="text-danger">*</span></label>
+    <select class="form-select" name="genres" multiple size="5">
+        {% for genre in genres %}
+            <option value="{{ genre.id }}"
+                {% if genre.id in selected_genres %}selected{% endif %}>
+                {{ genre.name }}
+            </option>
+        {% endfor %}
+    </select>
+    <div class="form-text">Удерживайте Ctrl для выбора нескольких жанров</div>
+</div>
+<div class="mb-3">
+    <label class="form-label">Краткое описание <span class="text-danger">*</span></label>
+    <textarea class="form-control" name="description" id="description-editor" rows="8">{{ book.description if book else '' }}</textarea>
+</div>
+{% if not is_edit %}
+<div class="mb-3">
+    <label class="form-label">Обложка <span class="text-danger">*</span></label>
+    <input type="file" class="form-control" name="cover" accept="image/*" required>
+</div>
+{% else %}
+<div class="mb-3">
+    <label class="form-label">Обложка</label>
+    {% if current_cover %}
+    <div class="mb-2">
+        <img src="{{ url_for('uploaded_file', filename=current_cover) }}"
+             class="cover-thumb rounded" alt="текущая обложка">
+        <div class="form-text">Текущая обложка. Загрузите новый файл чтобы заменить.</div>
+    </div>
+    {% else %}
+        <div class="form-text text-muted mb-2">Обложка не загружена.</div>
+    {% endif %}
+    <input type="file" class="form-control" name="cover" accept="image/*">
+</div>
+{% endif %}
+{% endmacro %}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="280">
+  <rect width="200" height="280" fill="#e74a3b"/>
+  <text x="100" y="155" font-family="Arial" font-size="48" font-weight="bold"
+        fill="white" text-anchor="middle">ШЕ</text>
+</svg>
