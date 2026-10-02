@@ -1,90 +1,56 @@
-# Курс Веб-разработки
-[![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![Flask](https://img.shields.io/badge/Flask-000000?style=flat&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
-[![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
-[![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
+# Веб-разработка
 
-Репозиторий содержит выполненные лабораторные работы и домашние задания по курсу "Веб-разработка" в Московском Политехническом университете.
+**Русский** · [English](README.en.md)
 
-**Веб-сайт проекта:** [web-dev.deev.space](https://web-dev.deev.space)
+[![CI](https://github.com/EDeev/web-dev/actions/workflows/ci.yml/badge.svg)](https://github.com/EDeev/web-dev/actions/workflows/ci.yml)
 
-**Автор:** Деев Егор Викторович, группа 241-327
+Лабораторные, домашние задания и экзаменационный проект по курсу «Веб-разработка» в Московском
+Политехе: шесть Flask-приложений, 37 задач на Python с тестами и электронная библиотека.
 
-## Структура репозитория
+**Статус:** учебный проект (Московский Политех, группа 241-327, 2025/26), завершён, в архиве ·
+лабораторные — [web-dev.deev.space](https://web-dev.deev.space), экзамен — [ex-web.deev.su](https://ex-web.deev.su)
 
-### Лабораторные работы
+![Экзамен: электронная библиотека](docs/screenshots/exam.png)
 
-#### [Лабораторная работа №1](https://web-dev.deev.space/lab1)
-Создание шаблона для отображения записи блога с использованием Flask и Jinja2. Реализация базовой структуры приложения, шаблонов для отображения постов и комментариев.
+**Стек:** Python · Flask · Jinja2 · Flask-Login · Flask-SQLAlchemy · Flask-Migrate · SQLite/MySQL · Bootstrap 5 · pytest
 
-**Стек:** Flask, Jinja2, Bootstrap 5
+| Папка | Что внутри |
+|---|---|
+| `labs/lab-1` | шаблон записи блога на Flask и Jinja2 |
+| `labs/lab-2` | данные запроса: параметры, заголовки, cookies, формы, проверка телефона |
+| `labs/lab-3` | вход через Flask-Login, защищённые страницы, сессии |
+| `labs/lab-4` | CRUD учётных записей: база, валидация, хеширование паролей |
+| `labs/lab-5` | роли и права, журнал посещений, отчёты с экспортом в CSV |
+| `labs/lab-6` | образовательный портал: отзывы к курсам, рейтинг, пагинация, фильтры |
+| `hws/hw-1`, `hws/hw-2` | 37 задач на Python (алгоритмы, файлы, декораторы, генераторы, ООП) и 241 тест |
+| `ex` | экзамен: каталог книг с поиском, рецензиями и ролями (администратор, модератор, пользователь) |
 
-#### [Лабораторная работа №2](https://web-dev.deev.space/lab2)
-Работа с данными запроса. Реализация обработки параметров URL, заголовков, cookies и форм. Валидация номера телефона на стороне сервера.
+## Запуск
 
-**Стек:** Flask, регулярные выражения
+```bash
+cd labs/lab-3 && pip install -r requirements.txt
+cd app && FLASK_DEBUG=1 python app.py
 
-#### [Лабораторная работа №3](https://web-dev.deev.space/lab3)
-Реализация аутентификации пользователей с использованием Flask-Login. Создание системы входа, защищенных страниц и управления сессиями.
+cd ex && pip install -r requirements.txt
+python db/db_seed.py          # база, роли и тестовые пользователи (пароли выводятся в консоль)
+python run.py
+```
 
-**Стек:** Flask, Flask-Login, session management
+`SECRET_KEY` и `FLASK_DEBUG` задаются переменными окружения. Тесты домашних заданий:
+`cd hws/hw-1 && pytest test.py`.
 
-#### [Лабораторная работа №4](https://web-dev.deev.space/lab4)
-Разработка CRUD-приложения для управления учетными записями пользователей. Работа с базой данных, валидация данных, хеширование паролей.
+## Лицензия
 
-**Стек:** Flask, Flask-SQLAlchemy, MySQL, bcrypt
+Учебный проект (Веб-разработка, Московский Политех, 2025/26). Код открыт для изучения, отдельной
+лицензии нет.
 
-#### [Лабораторная работа №5](https://web-dev.deev.space/lab5)
-Авторизация пользователей и формирование статистических отчетов. Реализация системы ролей, декораторов проверки прав, журнала посещений и экспорта в CSV.
+## Автор
 
-**Стек:** Flask, Flask-Login, Blueprints, CSV export
-
-#### [Лабораторная работа №6](https://web-dev.deev.space/lab6)
-Доработка образовательного портала: добавление системы отзывов к курсам, рейтинговой системы, пагинации и фильтрации.
-
-**Стек:** Flask, Flask-SQLAlchemy, Flask-Migrate, MySQL
-
-### Домашние задания
-
-#### [Домашнее задание №1](https://github.com/EDeev/web-dev/tree/main/hws/hw-1)
-Решение 20 задач на Python: базовые алгоритмы, работа с файлами, регулярные выражения, структуры данных. Покрытие тестами с использованием pytest (60+ тестов).
-
-**Темы:** базовый синтаксис Python, работа с файлами, алгоритмы, структуры данных
-
-#### [Домашнее задание №2](https://github.com/EDeev/web-dev/tree/main/hws/hw-2)
-Решение 17 задач на Python: функции, декораторы, генераторы, ООП, работа с файловой системой. Покрытие тестами с использованием pytest (60+ тестов).
-
-**Темы:** функции, декораторы, генераторы, ООП, аргументы командной строки, работа с файлами
-
-## План развития
-
-- Развертывание всех лабораторных работ на хостинге
-- Добавление CI/CD pipeline для автоматического тестирования
-- Документирование API endpoints
-- Рефакторинг кода с применением паттернов проектирования
-- Добавление Docker-контейнеризации для упрощения развертывания
-
-## Технологический стек
-
-- **Backend:** Python, Flask, Flask-Login, Flask-SQLAlchemy, Flask-Migrate
-- **Frontend:** HTML5, CSS3, Bootstrap 5, Jinja2
-- **База данных:** MySQL, SQLite
-- **Тестирование:** pytest
-- **Деплой:** NGINX, Unit
-
-## Контакты
-
-- Email: egor@deev.space
-- Telegram: @Egor_Deev
-- GitHub: @EDeev
-
-## Лицензия и использование
-
-Данный репозиторий создан в образовательных целях. Код доступен для изучения и адаптации без указания авторства.
+**Деев Егор Викторович** — [GitHub](https://github.com/EDeev) · [Telegram](https://t.me/DeevEgor) · [egor@deev.space](mailto:egor@deev.space)
 
 ---
 
 <div align="center">
-  <sub>⭐ Если проект оказался полезным, поставьте звездочку на GitHub!</sub>
-  <p><sub>Создано с ❤️ от вашего дорогого - <a href="https://deev.space">deev.space</a> ©</sub></p>
+  <sub>⭐ Если проект оказался полезным, поставьте звёздочку на GitHub!</sub>
+  <p><sub>Сделано с ❤️ — <a href="https://deev.space">deev.space</a></sub></p>
 </div>
