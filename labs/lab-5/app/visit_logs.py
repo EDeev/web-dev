@@ -51,7 +51,7 @@ def index():
         return redirect(url_for('index'))
 
     m = _get_app_module()
-    db, VisitLog = m.db, m.VisitLog
+    VisitLog = m.VisitLog
 
     page = request.args.get('page', 1, type=int)
     per_page = 10

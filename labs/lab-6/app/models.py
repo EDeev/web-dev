@@ -1,7 +1,6 @@
 import os
-from typing import Optional, Union, List
+from typing import Optional, List
 from datetime import datetime
-import sqlalchemy as sa
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import UserMixin
 from flask import url_for

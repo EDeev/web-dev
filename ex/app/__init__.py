@@ -9,7 +9,7 @@ import bleach
 import markdown
 
 app = Flask(__name__)
-app.secret_key = 'exam-secret-key-2026'
+app.secret_key = os.environ.get('SECRET_KEY', 'exam-secret-key-2026')
 
 _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'static', 'uploads')

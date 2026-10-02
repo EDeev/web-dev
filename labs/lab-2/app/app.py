@@ -1,3 +1,4 @@
+import os
 import re
 import random
 from flask import Flask, render_template, request
@@ -104,4 +105,4 @@ def phone():
     )
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=os.environ.get('FLASK_DEBUG') == '1')

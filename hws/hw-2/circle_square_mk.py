@@ -1,5 +1,4 @@
 import random
-import math
 
 def circle_square_mk(r, n):
     inside = 0

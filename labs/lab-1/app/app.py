@@ -1,3 +1,4 @@
+import os
 import random
 from flask import Flask, render_template
 from faker import Faker
@@ -48,4 +49,4 @@ def about():
     return render_template('about.html', title='Об авторе')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=os.environ.get('FLASK_DEBUG') == '1')

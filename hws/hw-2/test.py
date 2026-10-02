@@ -2,7 +2,6 @@ import pytest
 import math
 import os
 import subprocess
-import tempfile
 from fact import fact_it, fact_rec
 from show_employee import show_employee
 from sum_and_sub import sum_and_sub
@@ -11,7 +10,7 @@ from my_sum import my_sum
 from email_validation import fun
 from fibonacci import fibonacci
 from average_scores import compute_average_scores
-from plane_angle import Point, plane_angle
+from plane_angle import Point
 from complex_numbers import Complex
 from circle_square_mk import circle_square_mk
 from log_decorator import function_logger

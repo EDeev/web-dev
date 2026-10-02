@@ -1,7 +1,8 @@
+import os
 import re
 import random
 from datetime import datetime
-from flask import Flask, render_template, request, session, redirect, url_for, flash, abort
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -11,7 +12,7 @@ fake = Faker('ru_RU')
 
 app = Flask(__name__)
 application = app
-app.secret_key = '1234567890secret'
+app.secret_key = os.environ.get('SECRET_KEY', '1234567890secret')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -447,4 +448,4 @@ def change_password():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=os.environ.get('FLASK_DEBUG') == '1')

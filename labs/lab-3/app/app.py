@@ -1,3 +1,4 @@
+import os
 import re
 import random
 from flask import Flask, render_template, request, session, redirect, url_for, flash
@@ -8,7 +9,7 @@ fake = Faker('ru_RU')
 
 app = Flask(__name__)
 application = app
-app.secret_key = '1234567890secret'
+app.secret_key = os.environ.get('SECRET_KEY', '1234567890secret')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -166,4 +167,4 @@ def phone():
     )
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=os.environ.get('FLASK_DEBUG') == '1')
