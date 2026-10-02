@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint-and-homework:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install ruff==0.14.0 pytest==8.4.2
+      - name: Ruff (синтаксис и ошибки)
+        run: ruff check --select E9,F .
+      - name: Тесты домашних заданий
+        run: |
+          cd hws/hw-1 && pytest -q test.py && cd ../..
+          cd hws/hw-2 && pytest -q test.py
+
+  apps:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [labs/lab-1/app, labs/lab-2/app, labs/lab-3/app, labs/lab-4/app, labs/lab-5/app, labs/lab-6/app, ex]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Зависимости
+        run: |
+          req=$(dirname ${{ matrix.app }})/requirements.txt
+          [ -f ${{ matrix.app }}/requirements.txt ] && req=${{ matrix.app }}/requirements.txt
+          pip install -r $req
+      - name: Приложение импортируется
+        working-directory: ${{ matrix.app }}
+        run: python -c "import app"
