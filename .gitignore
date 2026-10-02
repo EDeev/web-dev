@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.db
+instance/
+ex/app/static/uploads/*
+!ex/app/static/uploads/.gitkeep
+labs/lab-6/app/media/images/*
+!labs/lab-6/app/media/images/.gitkeep
+.pytest_cache/
