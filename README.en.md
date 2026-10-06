@@ -2,7 +2,7 @@
 
 [Русский](README.md) · **English**
 
-[![CI](https://github.com/EDeev/web-dev/actions/workflows/ci.yml/badge.svg)](https://github.com/EDeev/web-dev/actions/workflows/ci.yml)
+[![CI](https://github.com/EDeev/web-dev/actions/workflows/ci.yml/badge.svg)](https://github.com/EDeev/web-dev/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/EDeev/web-dev)](https://github.com/EDeev/web-dev/releases)
 
 Labs, homework and the exam project for the "Web Development" course at Moscow Polytechnic University:
