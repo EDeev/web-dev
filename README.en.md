@@ -2,7 +2,8 @@
 
 [Русский](README.md) · **English**
 
-[![CI](https://github.com/EDeev/web-dev/actions/workflows/ci.yml/badge.svg)](https://github.com/EDeev/web-dev/actions/workflows/ci.yml)
+[![CI](https://github.com/EDeev/web-dev/actions/workflows/ci.yml/badge.svg)](https://github.com/EDeev/web-dev/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/EDeev/web-dev)](https://github.com/EDeev/web-dev/releases)
 
 Labs, homework and the exam project for the "Web Development" course at Moscow Polytechnic University:
 six Flask apps, 37 Python exercises with tests, and an online library.
@@ -38,6 +39,15 @@ python run.py
 
 `SECRET_KEY` and `FLASK_DEBUG` come from environment variables. Homework tests:
 `cd hws/hw-1 && pytest test.py`.
+
+**Docker:** the exam app `ex/` as a prebuilt image:
+
+```bash
+docker run -d -p 8000:8000 -e SECRET_KEY=change-me -v webdev-db:/app/db -v webdev-uploads:/app/app/static/uploads ghcr.io/edeev/web-dev
+docker logs <container>       # on first start: logins and passwords of the test users
+```
+
+(same as `git.deev.su/edeev/web-dev`), then open http://localhost:8000.
 
 ## License
 

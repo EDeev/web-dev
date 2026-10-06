@@ -2,7 +2,8 @@
 
 **Русский** · [English](README.en.md)
 
-[![CI](https://github.com/EDeev/web-dev/actions/workflows/ci.yml/badge.svg)](https://github.com/EDeev/web-dev/actions/workflows/ci.yml)
+[![CI](https://github.com/EDeev/web-dev/actions/workflows/ci.yml/badge.svg)](https://github.com/EDeev/web-dev/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/EDeev/web-dev)](https://github.com/EDeev/web-dev/releases)
 
 Лабораторные, домашние задания и экзаменационный проект по курсу «Веб-разработка» в Московском
 Политехе: шесть Flask-приложений, 37 задач на Python с тестами и электронная библиотека.
@@ -38,6 +39,15 @@ python run.py
 
 `SECRET_KEY` и `FLASK_DEBUG` задаются переменными окружения. Тесты домашних заданий:
 `cd hws/hw-1 && pytest test.py`.
+
+**Docker:** экзаменационное приложение `ex/` — готовый образ:
+
+```bash
+docker run -d -p 8000:8000 -e SECRET_KEY=смените-меня -v webdev-db:/app/db -v webdev-uploads:/app/app/static/uploads ghcr.io/edeev/web-dev
+docker logs <контейнер>       # при первом запуске — логины и пароли тестовых пользователей
+```
+
+(то же — `git.deev.su/edeev/web-dev`), сайт на http://localhost:8000.
 
 ## Лицензия
 
